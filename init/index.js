@@ -1,30 +1,43 @@
+require("dotenv").config();
 const mongoose = require('mongoose');
-const initData = require('./data.js');
+const { data: sampleListings } = require("./data.js");
+// const initData = require('./data.js');
 const Listing = require('../models/listing.js');
 
-const MONGO_URL = 'mongodb://127.0.0.1:27017/wanderlust';
+const DB_URL = process.env.ATLASDB_URL;
 
-main().then(() => {
-    console.log('Connected to MongoDB');
-}).catch(err => {
-    console.error('Error connecting to MongoDB:', err);
-});
+async function initDB() {
+  try {
+    if (!DB_URL) {
+      throw new Error("ATLASDB_URL is missing in .env");
+    }
 
-async function main() {
-    await mongoose.connect(MONGO_URL);
+    // ✅ Connect once
+    await mongoose.connect(DB_URL);
+    console.log("✅ Connected to MongoDB");
+
+    // ✅ Clear old data
+    await Listing.deleteMany({});
+    console.log("🗑️ Cleared existing listings");
+
+    // ✅ Add REQUIRED fields
+    const listings = sampleListings.map(listing => ({
+      ...listing,
+      owner: new mongoose.Types.ObjectId("69623ad528e899fba4f48f11"), // valid User ID
+      geometry: {
+        type: "Point",
+        coordinates: [0, 0] // required
+      }
+    }));
+
+    // ✅ Insert data
+    await Listing.insertMany(listings);
+    console.log("🎉 Database initialized successfully");
+
+    await mongoose.connection.close();
+  } catch (err) {
+    console.error("❌ Error initializing database:", err.message);
+  }
 }
 
-const initDB = async () => {
-    try {
-        await Listing.deleteMany({});//delete data if already present
-        console.log('Cleared existing listings');
-        initData.data=initData.data.map(obj=>({...obj,owner:'69623ad528e899fba4f48f11'}));
-        await Listing.insertMany(initData.data);
-        console.log('Database initialized with sample data');
-    } catch (err) {
-        console.error('Error initializing database:', err);
-    }
-};
-
 initDB();
-

@@ -20,7 +20,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-const dbUrl = process.env.ATLASDB_URL;
+const DB_URL = process.env.ATLASDB_URL;
 
 main().then(() => {
     console.log('Connected to MongoDB');
@@ -30,7 +30,7 @@ main().then(() => {
 });
 
 async function main() {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(DB_URL);
 }
 
 app.engine('ejs', ejsMate);
