@@ -33,7 +33,7 @@ module.exports.showListing = async (req, res) => {
 
   return res.render("listings/show", {
     listing,
-    mapToken,
+    mapToken:process.env.MAP_TOKEN
   });
 };
 
