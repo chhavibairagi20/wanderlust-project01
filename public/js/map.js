@@ -1,19 +1,35 @@
- mapboxgl.accessToken = mapToken;
+mapboxgl.accessToken = mapToken;
 
- const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: listing.geometry.coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
-        zoom: 9 // starting zoom
- });
+// Safety check
+if (
+  !listing ||
+  !listing.geometry ||
+  !Array.isArray(listing.geometry.coordinates) ||
+  listing.geometry.coordinates.length !== 2
+) {
+  console.error("Invalid coordinates:", listing?.geometry);
+} else {
+  const [lng, lat] = listing.geometry.coordinates;
 
- console.log(coordinates);
-   
- const marker = new mapboxgl.Marker()
-  .setLngLat(listing.geometry.coordinates)//Listing.geometry.coordinates
-  .setPopup(new mapboxgl.Popup({offset: 25})
-  .setHTML(`<h4>${listing.title}</h4><p>Exact location will be provided after booking!</p>`))
-  .addTo(map);
+  const map = new mapboxgl.Map({
+    container: "map",
+    style: "mapbox://styles/mapbox/streets-v11",
+    center: [lng, lat],
+    zoom: 9
+  });
+
+  // ✅ Marker
+  new mapboxgl.Marker({ color: "red" })
+    .setLngLat([lng, lat])
+    .setPopup(
+      new mapboxgl.Popup({ offset: 25 }).setHTML(
+        `<h4>${listing.title}</h4>
+         <p>Exact location will be provided after booking!</p>`
+      )
+    )
+    .addTo(map);
+}
+
 
   
 
