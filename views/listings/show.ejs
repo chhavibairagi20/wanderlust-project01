@@ -19,7 +19,10 @@
 
         <div class="card-body">
             <p class="card-text">
-                <i>Owned by <%= listing.owner.username %></i>
+             <i>
+             Owned by 
+             <%= listing.owner ? listing.owner.username : "Unknown user" %>
+             </i>
             </p>
             <p class="card-text"><%= listing.description %></p>
             <p class="card-text">

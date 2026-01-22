@@ -23,10 +23,10 @@ async function initDB() {
     // ✅ Add REQUIRED fields
     const listings = sampleListings.map(listing => ({
       ...listing,
-      owner: new mongoose.Types.ObjectId("69623ad528e899fba4f48f11"), // valid User ID
+      owner: new mongoose.Types.ObjectId("69721c7dd2d3ad57778772ed"), // valid User ID
       geometry: {
         type: "Point",
-        coordinates: [0, 0] // required
+        coordinates: [-122.6765, 45.5231] // required
       }
     }));
 
