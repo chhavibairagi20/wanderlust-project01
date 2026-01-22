@@ -73,17 +73,25 @@
             <div class="mb-3 mt-3">
                 <label class="form-label">Rating</label>
                 <fieldset class="starability-slot">
-                    <input type="radio" name="review[rating]" value="1" />
-                    <label>1</label>
-                    <input type="radio" name="review[rating]" value="2" />
-                    <label>2</label>
-                    <input type="radio" name="review[rating]" value="3" />
-                    <label>3</label>
-                    <input type="radio" name="review[rating]" value="4" />
-                    <label>4</label>
-                    <input type="radio" name="review[rating]" value="5" checked />
-                    <label>5</label>
-                </fieldset>
+    <!-- REQUIRED hidden input -->
+    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+
+    <input type="radio" id="rate1" name="review[rating]" value="1" />
+    <label for="rate1" title="Terrible">1 star</label>
+
+    <input type="radio" id="rate2" name="review[rating]" value="2" />
+    <label for="rate2" title="Not good">2 stars</label>
+
+    <input type="radio" id="rate3" name="review[rating]" value="3" />
+    <label for="rate3" title="Average">3 stars</label>
+
+    <input type="radio" id="rate4" name="review[rating]" value="4" />
+    <label for="rate4" title="Very good">4 stars</label>
+
+    <input type="radio" id="rate5" name="review[rating]" value="5" />
+    <label for="rate5" title="Amazing">5 stars</label>
+</fieldset>
+
             </div>
 
             <div class="mb-3 mt-3">
